@@ -379,5 +379,136 @@ If you got lost at all along the way and missed a couple of steps the final vers
 ## 3: Uploading to the Internet
 For this next part you will need to create a free account on [GitHub.com](https://github.com/). Once you do that, follow [the steps to upload a site to GitHub pages](https://pages.github.com/) to upload your site to the Internet. GitHub is an online host of 'repositories' which are essentially folders of files with code. To view your site via GitHub pages you essentially need to create a repository with a special name and add your website file to it. The link above should describe that in more detail but feel free to ask me for help if you get stuck!
 
-## 4: BONUS
-Ask Josh for the bonus activity if you get this far.
+## 4: BONUS fortune telling with JavaScript
+Lets add one more feature to your brand new site. The [magic 8 ball](https://en.wikipedia.org/wiki/Magic_8-Ball) is a toy that gives random answers to yes or no questions. The User asks it a question about their future, shakes it and a random answer is chosen out of 20 possibilities. While not exactly a scientifically proven method of telling the future, it's entertaining and perfect for a small coding activity.
+
+In this step we'll reconfigure the `input` section of our site to take some input in the text field, and when the user hits the button, the website will display a popup with a randomly selected item from a list of possible answers.
+
+The first thing we need to do is add some JavaScript to do this. While CSS and HTML are used for telling the website what to display, JavaScript is used for "doing stuff" and responding to user input. JavaScript is a programming language.
+
+Like CSS needs to be written in `<style> ... </style>` tags, JavaScript needs to be written in `<script> ... </script>` tags. Go ahead and add those in after your style but before the closing `</head>` tag.
+
+```html
+<head>
+    <style>
+        ...
+    </style>
+    <script type="text/javascript">
+
+    </script>
+</head>
+```
+
+Inside this script, we are going to write a `function` which is a block of code that we can run from our html, when the button is hit.
+
+Inside the script tags add:
+
+```html
+<head>
+    <style>
+        ...
+    </style>
+    <script type="text/javascript">
+        function predictFuture() {
+            alert("hello from predictFuture!")
+        }
+    </script>
+</head>
+```
+
+This adds a function `predictFuture` which we can then run from our html. When called, the function does whatever is inside its curly braces (`{ }`) which in this case is a simple command: `alert()` which displays an alert with text. Note that in JavaScript all text must be surrounded by `" "`. A text inside quotation marks is called a 'String'.
+
+Okay, so now we need to call this fucntion when the user presses a button. 
+
+Go ahead and add a little more html to the input section of your site. Alter the text and wrap the two input elements in a `<form>` tag with specific attributes like so:
+
+```html
+...
+<div class="input">
+    <form action="javascript:predictFuture()">
+        <input placeholder="Ask me about your future" type="text">
+        <input value="Ask" type="submit">
+    </form>
+</div>
+...
+```
+
+By wrapping the input in a `<form> ... </form>` with the attribute `action="javascript:predictFuture()"`, we are telling the html to call our `predictFuture` function when whatever is inside the form submits (in this case when the user hits the "Ask" button).
+
+Save, refresh your browser, and you should see the following when you hit the "Ask" button:
+
+<img src="alert-example.png">
+
+Cool! Now to add the fortune telling part. To feign some mystical knowledge of the future what we are going to do is make a list of preselected answers and pick one of them at random to display in the alert, instead of "hello from predictFuture".
+
+Inside your script tag add the following:
+
+```html
+...
+<script type="text/javascript">
+
+    var answers = ["It is certain", 
+                "It is decidedly so",
+                "Without a doubt",
+                "Yes definitely",
+                "You may rely on it",
+                "As I see it, yes",
+                "Most likely",
+                "Outlook good",
+                "Yes",
+                "Signs point to yes",
+                "Reply hazy try again",
+                "Ask again later",
+                "Better not tell you now",
+                "Cannot predict now",
+                "Concentrate and ask again",
+                "Don't count on it",
+                "My reply is no",
+                "My sources say no", 
+                "Outlook not so good", 
+                "Very doubtful"]
+
+    function predictFuture() {
+        alert("hello from predictFuture!")
+    }
+</script>
+...
+```
+
+A `var` is a variable. A variable is an object that has some information in it that can be referred to later. They can hold text, numbers, or lists of things. What we've done here is create a variable named `answers` that contains a big list of the 20 potential answers of the original magic 8 ball. So our variable `answers` is a list of 20 pieces of text.
+
+Our goal is to randomly get one of them in the `predictFuture()` function and display it to the user. In JavaScript, to get a specific item out of a list such as `answers`, you use the syntax answer[indexOfTheItem] where index is a number of the item you want to get. To get the first item ("It is certain") we would call `answers[0]` (note that all counting in programming starts at `0`). To get the second item, `answers[1]`, third `answers[2]`, etc. 
+
+We don't want a specific number though, we want a random number... in this case between 0 - 19 to represent the 1st - 20th items.
+
+In javascript you can get a random number between 0 and a number by using the following code: `Math.floor(Math.random() * 100)` (in this case between 0 and 99). We'll use this to pick a random answer from our array.
+
+For the final step, add the following to your script tag:
+
+```html
+<script type="text/javascript">
+
+    var answers = [...]
+
+    function predictFuture() {
+        var response = answers[Math.floor(Math.random() * 20)]
+        alert(response)
+    }
+</script>
+```
+
+This creates a new variable called `response` every time `predictFuture` is run. This variable holds a string (piece of text) because we used our random number code to pick a random between 0-19 and then extract that number element from the list of answers.
+
+Save, refresh, hit the button and...
+
+<img src="alert-final.png">
+
+Congratulations! You've just put your first JavaScript program inside your first website.
+
+Save your file and upload to GitHub Pages to make it live.
+
+[Final version with bonus](site-final-bonus.html)
+
+All Done!
+====
+Thanks for sticking through! I hope you enjoyed it and learned a little about programming. If you're interested in learning even more about programming, hit me up at josh@zerofinancial.com and we should chat. You can also check out free learn-to-code websites like Codeacademy or [RayWenderlich](https://www.raywenderlich.com/category/ios) if you're interested in making mobile apps.
